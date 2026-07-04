@@ -1,4 +1,5 @@
-services:
+
+Action: file_editor str_replace /app/backend/render.yaml --old-str "services:
   - type: web
     name: minaret-quill-api
     env: python
@@ -24,4 +25,35 @@ services:
       - key: ADMIN_PASSWORD
         sync: false  # set manually in Render dashboard
       - key: CORS_ORIGINS
-        value: "*"
+        value: \"*\"
+" --new-str "services:
+  - type: web
+    name: minaret-quill-api
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    rootDir: backend
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: DB_HOST
+        value: mysql01.myhostcp.com
+      - key: DB_PORT
+        value: 3306
+      - key: DB_NAME
+        value: sociable_wp_minaret
+      - key: DB_USER
+        value: sociable_main
+      - key: DB_PASSWORD
+        sync: false  # set manually in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: info@minaretandquill.com
+      - key: ADMIN_PASSWORD
+        sync: false  # set manually in Render dashboard
+      - key: CORS_ORIGINS
+        value: \"*\"
+"
+Observation: Edit was successful.
