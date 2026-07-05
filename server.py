@@ -38,6 +38,10 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 app = FastAPI(title="Minaret & Quill House API")
+@app.head("/")
+async def health_head():
+    return Response(status_code=200)
+
 api_router = APIRouter(prefix="/api")
 security = HTTPBearer(auto_error=False)
 
