@@ -13,8 +13,8 @@ from typing import List, Optional, Literal
 
 import bcrypt
 import jwt
-from fastapi import FastAPI, APIRouter, HTTPException, Depends
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Response
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, response
 from starlette.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, EmailStr
 from sqlalchemy import select, delete, and_
@@ -41,6 +41,10 @@ app = FastAPI(title="Minaret & Quill House API")
 @app.head("/")
 async def health_head():
     return Response(status_code=200)
+@app.get("/")
+async def root_get():
+    return {"ok": True, "name": "Minaret & Quill House API"}
+    
 
 api_router = APIRouter(prefix="/api")
 security = HTTPBearer(auto_error=False)
